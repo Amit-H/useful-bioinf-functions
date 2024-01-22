@@ -4,7 +4,7 @@
 # REQUIRES BBMap 
 
 # Define the directory containing the fastq files
-FASTQ_DIR="./" # Replace with the path to your fastq files if they are not in the current directory
+FASTQ_DIR="./" 
 
 # Navigate to the directory
 cd "$FASTQ_DIR"
