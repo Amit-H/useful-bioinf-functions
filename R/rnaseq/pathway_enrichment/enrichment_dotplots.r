@@ -21,7 +21,7 @@
 #' plot
 #'
 #' @export
-generate_enrichment_plot <- function(enrich_res, pathways, title = "Enrichment Analysis Results") {
+generate_enrichment_plot <- function(enrich_res, pathways, title = "Enrichment Analysis Results", universe) {
   
   library(gridExtra)
   library(cowplot)
@@ -37,7 +37,7 @@ generate_enrichment_plot <- function(enrich_res, pathways, title = "Enrichment A
   
   for (i in names(pathways)) {
     # run enrichment analysis
-    pathway_enrich_res <- enricher(enrich_res, TERM2GENE=pathways[[i]])
+    pathway_enrich_res <- enricher(enrich_res, TERM2GENE=pathways[[i]], universe = universe)
     
     # check if any enriched terms are detected with adjusted p-value less than 0.05
     if (any(pathway_enrich_res@result$p.adjust < 0.05)) {
@@ -84,3 +84,4 @@ generate_enrichment_plot <- function(enrich_res, pathways, title = "Enrichment A
   final_plot <- plot_grid(plot_title, final_plot, nrow = 2, rel_heights = c(0.1, 1))
   
   return(final_plot)
+}
