@@ -40,9 +40,9 @@ plot_pathway_enrichment <- function(pathway_enrich_res_up, pathway_enrich_res_do
   
   row.names(combined_res) <- combined_res$Description
   
-  combined_res$significance <- ifelse(combined_res$pvalue < 0.05, "significant", "not_significant")
+  combined_res$significance <- ifelse(combined_res$p.adjust < 0.05, "significant", "not_significant")
   
-  combined_res$gradient_fill <- ifelse(combined_res$significance == "significant", combined_res$pvalue, NA)
+  combined_res$gradient_fill <- ifelse(combined_res$significance == "significant", combined_res$p.adjust, NA)
   
   plot <- ggplot(combined_res, aes(x = reorder(Description, abs(Count)), y = Count, fill = gradient_fill)) +
     geom_bar(stat = "identity") +
@@ -53,7 +53,7 @@ plot_pathway_enrichment <- function(pathway_enrich_res_up, pathway_enrich_res_do
     theme_minimal() +
     scale_fill_gradient(low = "red", high = "blue", na.value = "grey") +
     theme(legend.title = element_blank()) +
-    guides(fill = guide_colourbar(title = "p-value")) +
+    guides(fill = guide_colourbar(title = "p-value - adjusted")) +
     xlab(label = NULL)
   
   return(plot)
